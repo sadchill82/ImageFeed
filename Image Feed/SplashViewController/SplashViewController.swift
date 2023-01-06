@@ -64,13 +64,13 @@ extension SplashViewController: AuthViewControllerDelegate {
     }
     private func fetchOAuthToken(_ code: String) {
         oauth2Service.fetchAuthToken(code:code) { [weak self] result in
-            UIBlockingProgressHUD.dismiss()
             guard let self = self else { return }
             switch result {
             case .success(let res):
                 self.oauth2TokenStorage.token = res.accessToken
                 self.fetchProfile(token: res.accessToken)
             case .failure:
+                UIBlockingProgressHUD.dismiss()
                 self.showAlert()
             }
         }

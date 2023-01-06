@@ -10,10 +10,11 @@ struct UserResult: Codable {
 
 final class ProfileImageService {
     
-    static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let shared = ProfileImageService()
     private (set) var avatarURL: String?
     private let profileService = ProfileService.shared
+    private init() {}
     private let urlSession = URLSession.shared
     private var task: URLSessionTask?
     private var lastToken: String?
@@ -35,12 +36,9 @@ final class ProfileImageService {
         token: String?,
         _ completion: @escaping (Result<UserResult, Error>) -> Void) {
             assert(Thread.isMainThread)
-            guard lastToken != token else {return}
+            guard lastToken != token, let token = token, profileService.profile != nil else {return}
             task?.cancel()
             lastToken = token
-            guard let token = token, let _ = profileService.profile else {
-                return
-            }
             
             let fulfillCompletionOnMainThread: (Result<UserResult, Error>) -> Void = { result in
                 DispatchQueue.main.async {
@@ -48,13 +46,13 @@ final class ProfileImageService {
                     guard case .success(let image) = result else { return }
                     self.avatarURL = image.profileImage?.medium
                     
-                }
-                if let url = self.avatarURL {
-                    self.notificationCenter
-                        .post(
-                            name: ProfileImageService.DidChangeNotification,
-                            object: self,
-                            userInfo: ["URL": url])
+                    if let url = self.avatarURL {
+                        self.notificationCenter
+                            .post(
+                                name: ProfileImageService.didChangeNotification,
+                                object: self,
+                                userInfo: ["URL": url])
+                    }
                 }
             }
             

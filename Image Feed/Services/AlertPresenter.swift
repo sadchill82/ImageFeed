@@ -4,7 +4,7 @@ protocol AlertPresenterProtocol {
     func showAlert(title: String?, text: String?, buttonText: String?, controller: UIViewController, callback: @escaping () -> Void)
 }
 
-class AlertPresenter: AlertPresenterProtocol {
+final class AlertPresenter: AlertPresenterProtocol {
     func showAlert(title: String?, text: String?, buttonText: String?, controller: UIViewController, callback: @escaping () -> Void) {
         let alert = UIAlertController(
             title: title,

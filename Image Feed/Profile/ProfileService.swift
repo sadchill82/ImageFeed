@@ -32,6 +32,7 @@ struct Profile {
 
 final class ProfileService {
     static let shared = ProfileService()
+    private init() {}
     
     private enum NetworkError: Error {
         case codeError
@@ -52,12 +53,10 @@ final class ProfileService {
     
     func fetchProfile(_ token: String?, handler: @escaping (Result<ProfileResult, Error>) -> Void){
         assert(Thread.isMainThread)
-        guard lastToken != token else { return }
+        guard lastToken != token, let token = token else { return }
         task?.cancel()
         lastToken = token
-        guard let token = token else {
-            return
-        }
+
         let request = makeUserDataRequest(token: token)
         let session = URLSession.shared
         
