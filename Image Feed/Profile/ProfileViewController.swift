@@ -1,13 +1,52 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
-    @IBOutlet private weak var avatarImageView: UIImageView!
+    
+    private let profileService = ProfileService.shared
+    private let tokenStorage = OAuth2TokenStorage()
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    @IBOutlet private weak var profileImageView: UIImageView!
     @IBOutlet private weak var nameLabel: UILabel!
-    @IBOutlet private weak var loginNameLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var nicknameLabel: UILabel!
+    @IBOutlet private weak var messageLabel: UILabel!
+    @IBAction private func didTapLogoutButton(_ sender: Any) {
+    }
     
-    @IBOutlet private weak var logoutButton: UIButton!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+        guard let profile = profileService.profile else {
+            return
+        }
+        updateProfileDetails(profile: profile)
+    }
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let url = URL(string: profileImageURL)
+        else {
+            return
+        }
+        let processor = RoundCornerImageProcessor(cornerRadius: 35)
+        profileImageView.kf.setImage(with:url, options: [.processor(processor)])
+    }
     
-    @IBAction private func didTapLogoutButton() {
+    private func updateProfileDetails(profile: Profile) {
+        nameLabel.text = profile.name
+        nicknameLabel.text = profile.loginName
+        messageLabel.text = profile.bio
     }
 }

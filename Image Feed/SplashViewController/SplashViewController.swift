@@ -6,13 +6,19 @@ final class SplashViewController: UIViewController {
     private let oauth2Service = OAuth2Service()
     private let oauth2TokenStorage = OAuth2TokenStorage()
     
+    private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    private var alertPresenter = AlertPresenter()
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if oauth2TokenStorage.token != nil {
-            switchToTabBarController()
+        successedAuth()
+    }
+    
+    private func successedAuth() {
+        if let token = oauth2TokenStorage.token {
+            self.fetchProfile(token: token)
         } else {
-            // Show Auth Screen
             performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
         }
     }
@@ -49,24 +55,51 @@ extension SplashViewController {
 }
 
 extension SplashViewController: AuthViewControllerDelegate {
+    
     func authViewController(_ vc: AuthViewController, didAuthenticateWithCode code: String) {
         dismiss(animated: true) { [weak self] in
+            UIBlockingProgressHUD.show()
+            self?.fetchOAuthToken(code)
+        }
+    }
+    private func fetchOAuthToken(_ code: String) {
+        oauth2Service.fetchAuthToken(code:code) { [weak self] result in
             guard let self = self else { return }
-            self.fetchOAuthToken(code)
+            switch result {
+            case .success(let res):
+                self.oauth2TokenStorage.token = res.accessToken
+                self.fetchProfile(token: res.accessToken)
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                self.showAlert()
+            }
         }
     }
     
-    private func fetchOAuthToken(_ code: String) {
-        oauth2Service.fetchOAuthToken(code: code) { [weak self] result in
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.oauth2TokenStorage.token = code
+            case .success(let profile):
+                UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
+                self.profileImageService.fetchProfileImageURL(
+                    username: profile.username,
+                    token: token) { _ in }
             case .failure:
-                // TODO [Sprint 11]
-                break
+                UIBlockingProgressHUD.dismiss()
+                self.showAlert()
             }
         }
+    }
+    
+    func showAlert() {
+        alertPresenter.showAlert(
+            title: "Что-то пошло не так",
+            text: "Не удалось войти в систему",
+            buttonText: "Попробовать еще раз",
+            controller: self,
+            callback: successedAuth
+        )
     }
 }
