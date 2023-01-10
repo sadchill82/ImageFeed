@@ -86,7 +86,7 @@ class ImagesListViewController: UIViewController {
         let date = photos[indexPath.row].createdAt
         cell.dateLabel.text = dateFormatter.string(from: date)
         let isLiked = photos[indexPath.row].isLiked
-        let buttonImage = isLiked ? UIImage(named: "like-active") : UIImage(named: "like-no-active")
+        let buttonImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         cell.likeButton.setImage(buttonImage, for: .normal)
     }
     

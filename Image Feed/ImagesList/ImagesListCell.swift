@@ -29,7 +29,7 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(isLiked: Bool) {
-        let buttonImage = isLiked ? UIImage(named: "like-active") : UIImage(named: "like-no-active")
+        let buttonImage = isLiked ? UIImage(named: "like_button_on") : UIImage(named: "like_button_off")
         likeButton.setImage(buttonImage, for: .normal)
     }
     

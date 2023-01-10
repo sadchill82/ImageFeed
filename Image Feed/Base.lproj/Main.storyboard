@@ -48,8 +48,8 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yHg-cV-4Gf" userLabel="Like Button">
-                                                    <rect key="frame" x="358" y="23" width="30" height="26"/>
-                                                    <state key="normal" image="like-active"/>
+                                                    <rect key="frame" x="346" y="23" width="42" height="42"/>
+                                                    <state key="normal" image="like_button_on"/>
                                                     <connections>
                                                         <action selector="likeButtonClicked:" destination="f5V-vd-9vj" eventType="touchUpInside" id="U50-j9-3kg"/>
                                                     </connections>
@@ -97,7 +97,7 @@
                             <constraint firstAttribute="bottom" secondItem="ILa-dr-Att" secondAttribute="bottom" id="Pju-BA-IRk"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab-editorial-active" id="T91-wa-0AU"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_editorial_active" id="T91-wa-0AU"/>
                     <connections>
                         <outlet property="tableView" destination="ILa-dr-Att" id="7vc-iG-ZkD"/>
                         <segue destination="rVS-XN-TLv" kind="presentation" identifier="ShowSingleImage" id="OhM-XB-scV"/>
@@ -115,7 +115,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Photoprofile" translatesAutoresizingMaskIntoConstraints="NO" id="UdT-Ay-IMp" userLabel="Profile Image">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar" translatesAutoresizingMaskIntoConstraints="NO" id="UdT-Ay-IMp" userLabel="Profile Image">
                                 <rect key="frame" x="16" y="76" width="70" height="70"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -136,9 +136,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rB5-e5-FXj" userLabel="Logout Button">
-                                <rect key="frame" x="368" y="100" width="20" height="22"/>
+                                <rect key="frame" x="364" y="100" width="24" height="24"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="logout"/>
+                                <state key="normal" image="logout_button"/>
                                 <connections>
                                     <action selector="didTapLogoutButton:" destination="T8c-pP-qTH" eventType="touchUpInside" id="roR-VR-hvf"/>
                                     <segue destination="8ck-0M-skJ" kind="show" identifier="ShowSplashView" id="iQr-aT-Xay"/>
@@ -169,7 +169,7 @@
                             <constraint firstItem="GXJ-oz-VxS" firstAttribute="leading" secondItem="mga-Ow-KAA" secondAttribute="leading" constant="16" id="y9Q-li-Op3"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="tab-profile-active" id="6FM-3u-Kiz"/>
+                    <tabBarItem key="tabBarItem" title="" image="tab_profile_active" id="6FM-3u-Kiz"/>
                     <connections>
                         <outlet property="messageLabel" destination="5l8-CE-LAC" id="JB0-FU-sk9"/>
                         <outlet property="nameLabel" destination="GXJ-oz-VxS" id="QSE-yM-c03"/>
@@ -234,7 +234,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HWb-xC-jYk" userLabel="Back Button">
                                 <rect key="frame" x="16" y="60" width="24" height="24"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="backward"/>
+                                <state key="normal" image="nav_back_button_white"/>
                                 <connections>
                                     <action selector="didTapBackButton:" destination="rVS-XN-TLv" eventType="touchUpInside" id="qJp-i8-9Il"/>
                                 </connections>
@@ -247,7 +247,7 @@
                                     <constraint firstAttribute="height" constant="50" id="uEw-rF-XQc"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="sharing"/>
+                                <state key="normal" image="share_button"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                         <integer key="value" value="25"/>
@@ -370,7 +370,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1g-Ii-2rX" userLabel="nav back button">
                                 <rect key="frame" x="9" y="103" width="24" height="24"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="nav_back"/>
+                                <state key="normal" image="nav_back_button_white"/>
                                 <connections>
                                     <action selector="didTapBackButton:" destination="d2P-yG-Sy4" eventType="touchUpInside" id="teP-sJ-UYi"/>
                                 </connections>
@@ -413,8 +413,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Vector" translatesAutoresizingMaskIntoConstraints="NO" id="qON-mU-51Z">
-                                <rect key="frame" x="169.5" y="404" width="75" height="78"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="auth_screen_logo" translatesAutoresizingMaskIntoConstraints="NO" id="qON-mU-51Z">
+                                <rect key="frame" x="177" y="413" width="60" height="60"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JTg-d6-aZA"/>
@@ -436,17 +436,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Photoprofile" width="70" height="70"/>
-        <image name="Vector" width="75" height="78"/>
         <image name="auth_screen_logo" width="60" height="60"/>
-        <image name="backward" width="24" height="24"/>
-        <image name="like-active" width="30" height="26"/>
-        <image name="logout" width="20" height="22"/>
-        <image name="nav_back" width="24" height="24"/>
+        <image name="avatar" width="70" height="70"/>
+        <image name="like_button_on" width="42" height="42"/>
+        <image name="logout_button" width="24" height="24"/>
+        <image name="nav_back_button_white" width="24" height="24"/>
         <image name="placeholder-icon" width="83" height="75"/>
-        <image name="sharing" width="30" height="30"/>
-        <image name="tab-editorial-active" width="30" height="30"/>
-        <image name="tab-profile-active" width="30" height="30"/>
+        <image name="share_button" width="50" height="50"/>
+        <image name="tab_editorial_active" width="30" height="30"/>
+        <image name="tab_profile_active" width="30" height="30"/>
         <namedColor name="YP Black">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
