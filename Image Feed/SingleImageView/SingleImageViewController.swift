@@ -19,6 +19,9 @@ class SingleImageViewController: UIViewController {
             activityItems: [imageView.image!],
             applicationActivities: nil
         )
+        guard imageView.image != nil else {
+            fatalError("share Error")
+        }
         present(share, animated: true, completion: nil)
     }
     
