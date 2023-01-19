@@ -133,9 +133,19 @@ extension ImagesListViewController: ImagesListCellDelegate {
         UIBlockingProgressHUD.show()
         imagesListService.changeLike(photoId: photo.id, isLiked: !photo.isLiked, token: token) { [weak self] index, isLiked in
             if let cell = self?.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ImagesListCell{
+                cell.onReuse = {
+                    let newPhoto = Photo(
+                        id: photo.id,
+                        size: photo.size,
+                        createdAt: photo.createdAt,
+                        welcomeDescription: photo.welcomeDescription,
+                        thumbImageURL: photo.thumbImageURL,
+                        largeImageURL: photo.largeImageURL,
+                        isLiked: !photo.isLiked)
+                    self?.photos[index] = newPhoto
+                }
                 cell.setIsLiked(isLiked: isLiked)
                 UIBlockingProgressHUD.dismiss()
-                print(photo.isLiked)
             }
         }
         UIBlockingProgressHUD.dismiss()

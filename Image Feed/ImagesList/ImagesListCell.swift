@@ -20,12 +20,15 @@ final class ImagesListCell: UITableViewCell {
     
     static let reuseIdentifier = "ImagesListCell"
     
+    var onReuse = {}
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         likeButton.setImage(nil, for: .normal)
         dateLabel.text = nil
         cellImage.image = nil
         cellImage.kf.cancelDownloadTask()
+        onReuse()
     }
     
     func setIsLiked(isLiked: Bool) {

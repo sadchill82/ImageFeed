@@ -48,6 +48,7 @@ final class ImageListService {
                 switch result {
                 case .success(let images):
                     let newPhotos = images.map { $0.convert() }
+                    self.photos.append(contentsOf: newPhotos);
                     self.task = nil
                     if self.lastLoadedPage != nil  {
                         self.lastLoadedPage! += 1
