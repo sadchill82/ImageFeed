@@ -29,14 +29,14 @@ final class ImageListService {
         return request
     }
     
-    private func makeLikeChangingRequest(photoId: String, isLike: Bool, token: String) -> URLRequest {
+    private func makeLikeChangingRequest(photoId: String, isLiked: Bool, token: String) -> URLRequest {
         let urlComponents = URLComponents(string: Constants.getPhotosURL)!
         guard var url = urlComponents.url else {
             fatalError("makeRequest Error")
         }
         url.appendPathComponent("/\(photoId)/like")
         var request = URLRequest(url: url)
-        request.httpMethod = isLike ? "POST" : "DELETE"
+        request.httpMethod = isLiked ? "POST" : "DELETE"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         return request
     }
@@ -48,7 +48,6 @@ final class ImageListService {
                 switch result {
                 case .success(let images):
                     let newPhotos = images.map { $0.convert() }
-                    self.photos.append(contentsOf: newPhotos);
                     self.task = nil
                     if self.lastLoadedPage != nil  {
                         self.lastLoadedPage! += 1
@@ -80,9 +79,9 @@ final class ImageListService {
     
     func changeLike(
         photoId: String,
-        isLike: Bool,
+        isLiked: Bool,
         token: String,
-        _ completion: @escaping (_ isLiked: Bool) -> Void
+        _ completion: @escaping (_ index: Int, _ isLiked: Bool) -> Void
     ) {
         let fulfillCompletionOnMainThread: (Result<LikedPhotoResult, Error>) -> Void = { [weak self] result in
             guard let self = self else { return }
@@ -101,9 +100,8 @@ final class ImageListService {
                             thumbImageURL: photo.thumbImageURL,
                             largeImageURL: photo.largeImageURL,
                             isLiked: !photo.isLiked)
-                        
                         self.photos[index] = newPhoto
-                        completion(!photo.isLiked)
+                        completion(index, !photo.isLiked)
                     }
                     self.task = nil
                     
@@ -113,7 +111,7 @@ final class ImageListService {
                 }
             }
         }
-        let request = makeLikeChangingRequest(photoId: photoId, isLike: isLike, token: token)
+        let request = makeLikeChangingRequest(photoId: photoId, isLiked: isLiked, token: token)
         let session = URLSession.shared
         let task = session.objectTask(for: request, completion: fulfillCompletionOnMainThread)
         self.task = task

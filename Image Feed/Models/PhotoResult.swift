@@ -1,5 +1,11 @@
 import UIKit
 
+let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+    return formatter
+}()
+
 struct PhotoResult: Codable {
     let id: String
     let width: Int
@@ -22,13 +28,7 @@ struct PhotoResult: Codable {
 
 extension PhotoResult {
     func convert() -> Photo {
-        
-        let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            return formatter
-        }()
-        
+                
         return Photo(
             id: self.id,
             size: CGSize(width: self.width, height: self.height),

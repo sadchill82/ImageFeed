@@ -422,7 +422,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Mdz-yK-J7R"/>
                     <connections>
-                        <segue destination="57v-qC-9E2" kind="presentation" identifier="ShowAuth" id="lMm-wv-FGZ"/>
+                        <segue destination="57v-qC-9E2" kind="presentation" identifier="ShowAuthenticationScreen" id="lMm-wv-FGZ"/>
                         <segue destination="3pq-Ly-xpZ" kind="show" identifier="ShowFeed" id="5f6-DK-K72"/>
                     </connections>
                 </viewController>
