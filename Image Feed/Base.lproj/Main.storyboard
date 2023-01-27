@@ -225,6 +225,9 @@
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="1Y7-ak-enE"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="JUy-6R-wfu"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rVS-XN-TLv" id="SL5-As-oV7"/>
+                                </connections>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1W-GG-rTV" userLabel="Back Button">
                                 <rect key="frame" x="16" y="60" width="24" height="24"/>

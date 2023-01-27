@@ -1,11 +1,24 @@
 import UIKit
 
-//Очень плохо
-let dateFormatter: DateFormatter = {
+let dateTimeFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
     return formatter
 }()
+
+func getDateFromString(_ string: String) -> Date? {
+    dateTimeFormatter.date(from: string)
+}
+
+extension Date {
+    static func date(fromString string: String, withFormat format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.calendar = .init(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "en-US")
+        return dateFormatter.date(from: string)
+    }
+}
 
 struct PhotoResult: Codable {
     let id: String
@@ -33,7 +46,7 @@ extension PhotoResult {
         return Photo(
             id: self.id,
             size: CGSize(width: self.width, height: self.height),
-            createdAt: dateFormatter.date(from: self.createdAt) ?? Date(),
+            createdAt: getDateFromString(self.createdAt)!,
             welcomeDescription: self.welcomeDescription,
             thumbImageURL: self.urls.thumb,
             largeImageURL: self.urls.full,
