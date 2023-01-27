@@ -1,13 +1,5 @@
 import Foundation
 
-struct UserResult: Codable {
-    let profileImage: ProfileImage?
-    
-    enum CodingKeys: String, CodingKey {
-        case profileImage = "profile_image"
-    }
-}
-
 final class ProfileImageService {
     
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")

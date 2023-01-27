@@ -1,44 +1,57 @@
 import UIKit
+import Kingfisher
+import SwiftUI
 
-final class SingleImageViewController: UIViewController {
-    var image: UIImage! {
-        didSet {
-            guard isViewLoaded else { return }
-            imageView.image = image
-            rescaleAndCenterImageInScrollView(image: image)
-        }
-    }
+
+class SingleImageViewController: UIViewController {
+    var fullImageUrl: String? = nil
+    var size: CGSize? = nil
     
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scrollView.minimumZoomScale = 0.1
-        scrollView.maximumZoomScale = 1.25
-        imageView.image = image
-        rescaleAndCenterImageInScrollView(image: image)
-    }
-    
-    @IBAction private func didTapBackButton() {
+    @IBAction func didTapBackButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction private func didTapShareButton(_ sender: UIButton) {
+    @IBAction func didTapShareButton(_ sender: Any) {
         let share = UIActivityViewController(
-            activityItems: [image!],
+            activityItems: [imageView.image!],
             applicationActivities: nil
         )
+        guard imageView.image != nil else {
+            fatalError("share Error")
+        }
         present(share, animated: true, completion: nil)
     }
     
-    private func rescaleAndCenterImageInScrollView(image: UIImage) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        guard let fullUrl = fullImageUrl, let size = size else {
+            return
+        }
+        let url = URL(string: "\(fullUrl)")
+        UIBlockingProgressHUD.show()
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder-icon"), options: []){ [weak self] result in
+            guard let self = self else { return }
+            defer { UIBlockingProgressHUD.dismiss() }
+            guard case .success(_) = result else { return }
+            self.scrollView.minimumZoomScale = 0.1
+            self.scrollView.maximumZoomScale = 1.25
+            self.rescaleAndCenterImageInScrollView(size: size)
+        }
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 1
+        rescaleAndCenterImageInScrollView(size: size)
+    }
+    
+    private func rescaleAndCenterImageInScrollView(size: CGSize) {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
+        view.layoutIfNeeded()
         let visibleRectSize = view.bounds.size
-        let imageSize = image.size
-        let hScale = visibleRectSize.width / imageSize.width
-        let vScale = visibleRectSize.height / imageSize.height
+        let hScale = visibleRectSize.width / size.width
+        let vScale = visibleRectSize.height / size.height
         let scale = min(maxZoomScale, max(minZoomScale, max(hScale, vScale)))
         scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
@@ -52,8 +65,5 @@ final class SingleImageViewController: UIViewController {
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         imageView
-    }
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        rescaleAndCenterImageInScrollView(image: image)
     }
 }

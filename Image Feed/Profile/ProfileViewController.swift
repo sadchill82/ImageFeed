@@ -3,6 +3,7 @@ import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
+    private let ShowSplashViewIdentifier = "ShowSplashView"
     private let profileService = ProfileService.shared
     private let tokenStorage = OAuth2TokenStorage()
     
@@ -13,6 +14,9 @@ final class ProfileViewController: UIViewController {
     @IBOutlet private weak var nicknameLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
     @IBAction private func didTapLogoutButton(_ sender: Any) {
+        tokenStorage.token = nil
+        profileService.cleanCookies()
+        performSegue(withIdentifier: ShowSplashViewIdentifier, sender: nil)
     }
     
     override func viewDidLoad() {
