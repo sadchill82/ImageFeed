@@ -10,11 +10,11 @@ class OAuth2Service {
     private var lastCode: String?
     
     private func makeRequest(code: String) -> URLRequest {
-        var urlComponents = URLComponents(string: Constants.oauthString)!
+        var urlComponents = URLComponents(string: AuthConfiguration.constants.oauthString)!
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: Constants.accessKey),
-            URLQueryItem(name: "client_secret", value: Constants.secretKey),
-            URLQueryItem(name: "redirect_uri", value: Constants.redirectURI),
+            URLQueryItem(name: "client_id", value: AuthConfiguration.constants.accessKey),
+            URLQueryItem(name: "client_secret", value: AuthConfiguration.constants.secretKey),
+            URLQueryItem(name: "redirect_uri", value: AuthConfiguration.constants.redirectURI),
             URLQueryItem(name: "code", value: code),
             URLQueryItem(name: "grant_type", value: "authorization_code")
         ]
