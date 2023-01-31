@@ -110,7 +110,7 @@
         <!--Profile View Controller-->
         <scene sceneID="i40-7f-ILo">
             <objects>
-                <viewController id="T8c-pP-qTH" customClass="ProfileViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="T8c-pP-qTH" customClass="ProfileViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mga-Ow-KAA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="838"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -353,7 +353,7 @@
         <!--Web View View Controller-->
         <scene sceneID="xYK-Be-MyR">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="d2P-yG-Sy4" customClass="WebViewViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" modalPresentationStyle="fullScreen" id="d2P-yG-Sy4" customClass="WebViewViewController" customModule="Image_Feed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CxX-ka-wto">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

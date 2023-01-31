@@ -14,7 +14,7 @@ final class ImageListService {
     
     
     private func makePhotosRequest(pageNumber: Int, token: String) -> URLRequest {
-        var urlComponents = URLComponents(string: Constants.getPhotosURL)!
+        var urlComponents = URLComponents(string: AuthConfiguration.constants.getPhotosURL)!
         urlComponents.queryItems = [
             URLQueryItem(name: "page", value: String(pageNumber)),
             URLQueryItem(name: "per_page", value: "10"),
@@ -30,7 +30,7 @@ final class ImageListService {
     }
     
     private func makeLikeChangingRequest(photoId: String, isLiked: Bool, token: String) -> URLRequest {
-        let urlComponents = URLComponents(string: Constants.getPhotosURL)!
+        let urlComponents = URLComponents(string: AuthConfiguration.constants.getPhotosURL)!
         guard var url = urlComponents.url else {
             fatalError("makeRequest Error")
         }
